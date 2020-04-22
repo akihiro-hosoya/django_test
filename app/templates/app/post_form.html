@@ -50,7 +50,9 @@
             if (select !== undefined) {
                 parentCategoryElement.val(select);
             }
+        };
 
+        const changeCategory2 = (select) => { // changeCategory関数の定義
             // 小カテゴリの選択欄を空にする。
             categoryElement.children().remove();
 
@@ -70,11 +72,13 @@
             if (select !== undefined) {
                 categoryElement.val(select);
             }
-
         };
 
         $('#id_grand_category').on('change', () => {
             changeCategory1();
+            $('#id_parent_category').on('change', () => {
+                changeCategory2();
+            });
         });
 
         // 入力値に問題があって再表示された場合、ページ表示時点で中カテゴリが絞り込まれるようにする
@@ -82,6 +86,12 @@
             const selectedParentCategory = parentCategoryElement.val();
             changeCategory1(selectedParentCategory);
         }
+        // 入力値に問題があって再表示された場合、ページ表示時点で小カテゴリが絞り込まれるようにする
+        if (parentCategoryElement.val()) {
+            const selectedCategory = categoryElement.val();
+            changeCategory2(selectedCategory);
+        }
+
     </script>
 {% endblock %}
 
