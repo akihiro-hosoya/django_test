@@ -6,91 +6,84 @@
         <button type="submit">送信</button>
     </form>
 {% endblock %}
-
+​
 {% block extrajs %}
     <script>
         const grandCategoryElement = $('#id_grand_category');
         const parentCategoryElement = $('#id_parent_category');
         const categoryElement = $('#id_category');
         const categories = {
-            {% for grand in grandcategory_list %}
-                '{{ grand.pk }}': [
-                    {% for parent in parentcategory_set.all %}
-                        '{{ parent.pk }}': [
-                            {% for category in parent.category_set.all %}
-                                {
-                                    'pk': '{{ category.pk }}',
-                                    'name': '{{ category.name }}'
-                                },
-                            {% endfor %}
-                        ],
+            {% for parent in parentcategory_list %}
+                '{{ parent.pk }}': [
+                    {% for category in parent.category_set.all %}
+                        {
+                            'pk': '{{ category.pk }}',
+                            'name': '{{ category.name }}'
+                        },
                     {% endfor %}
                 ],
             {% endfor %}
         };
-
-        const changeCategory1 = (select) => { // changeCategory関数の定義
-            // 中カテゴリの選択欄を空にする。
-            parentcategoryElement.children().remove();
-
-            // 選択した大カテゴリに紐づく中カテゴリの一覧を取得する。
-            const grandId = grandCategoryElement.val();
-            const parentCategoryList = categories[grandId];
-
-            // 中カテゴリの選択肢を作成・追加。
-            for (const parentCategory of parentCategoryList) {
-                const option = $('<option>');
-                option.val(parentCategory['pk']);
-                option.text(parentCategory['name']);
-                parentCategoryElement.append(option);
-            }
-
-            // 指定があれば、そのカテゴリを選択する
-            if (select !== undefined) {
-                parentCategoryElement.val(select);
-            }
+        const categories2 = {
+            {% for grand in grandcategory_list %}
+                '{{ grand.pk }}': [
+                    {% for category in grand.parentcategory_set.all %}
+                        {
+                            'pk': '{{ category.pk }}',
+                            'name': '{{ category.name }}'
+                        },
+                    {% endfor %}
+                ],
+            {% endfor %}
         };
-
-        const changeCategory2 = (select) => { // changeCategory関数の定義
-            // 小カテゴリの選択欄を空にする。
+​
+        const changeCategory = (select) => {
             categoryElement.children().remove();
-
-            // 選択した中カテゴリに紐づく小カテゴリの一覧を取得する。
             const parentId = parentCategoryElement.val();
             const categoryList = categories[parentId];
-
-            // 子カテゴリの選択肢を作成・追加。
             for (const category of categoryList) {
                 const option = $('<option>');
                 option.val(category['pk']);
                 option.text(category['name']);
                 categoryElement.append(option);
             }
-
-            // 指定があれば、そのカテゴリを選択する
             if (select !== undefined) {
                 categoryElement.val(select);
             }
         };
-
-        $('#id_grand_category').on('change', () => {
-            changeCategory1();
-            $('#id_parent_category').on('change', () => {
-                changeCategory2();
-            });
+​
+        const changeCategory2 = (select) => {
+            parentCategoryElement.children().remove();
+            const grandId = grandCategoryElement.val();
+            const categoryList2 = categories2[grandId];
+            for (const category2 of categoryList2) {
+                const option2 = $('<option>');
+                option2.val(category2['pk']);
+                option2.text(category2['name']);
+                parentCategoryElement.append(option2);
+            }
+            if (select !== undefined) {
+                parentCategoryElement.val(select);
+            }
+        };
+​
+        $('#id_parent_category').on('change', () => {
+            changeCategory();
         });
-
-        // 入力値に問題があって再表示された場合、ページ表示時点で中カテゴリが絞り込まれるようにする
-        if (grandCategoryElement.val()) {
-            const selectedParentCategory = parentCategoryElement.val();
-            changeCategory1(selectedParentCategory);
-        }
-        // 入力値に問題があって再表示された場合、ページ表示時点で小カテゴリが絞り込まれるようにする
+​
+        $('#id_grand_category').on('change', () => {
+            changeCategory2();
+            changeCategory();
+        });
+​
         if (parentCategoryElement.val()) {
             const selectedCategory = categoryElement.val();
-            changeCategory2(selectedCategory);
+            changeCategory(selectedCategory);
         }
-
+​
+        if (grandCategoryElement.val()) {
+            const selectedParentCategory = parentCategoryElement.val();
+            changeCategory2(selectedParentCategory);
+        }
     </script>
 {% endblock %}
-

@@ -1,0 +1,11 @@
+        const grandCategoryElement = $('#id_grand_category'); // #id_grand_categoryを展開して代入
+        const parentCategoryElement = $('#id_parent_category'); // #id_parent_categoryを展開して代入
+        const categoryElement = $('#id_category');  // #id_categoryを展開して代入
+        const categories = { // 以下に全てのカテゴリーを定義
+            {% for grand in grandcategory_list %}
+                '{{ grand.pk }}': [
+                    {% for parent in parentcategory_list %} // 親カテゴリーを1つずつ取り出す
+                        '{{ parent.pk }}': [ // 例：カメラ.1
+                            {% for category in parent.category_set.all %} // 子カテゴリーを1つずつ取り出す
+                                {
+                                                ],
