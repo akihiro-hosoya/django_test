@@ -1,89 +1,89 @@
 {% extends 'app/base.html' %}
 {% block content %}
-    <form action="" method="POST">
-        {{ form.as_p }}
-        {% csrf_token %}
-        <button type="submit">送信</button>
-    </form>
+<form action="" method="POST">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <button type="submit">送信</button>
+</form>
 {% endblock %}
 ​
 {% block extrajs %}
-    <script>
-        const grandCategoryElement = $('#id_grand_category');
-        const parentCategoryElement = $('#id_parent_category');
-        const categoryElement = $('#id_category');
-        const categories = {
+<script>
+    const grandCategoryElement = $('#id_grand_category');
+    const parentCategoryElement = $('#id_parent_category');
+    const categoryElement = $('#id_category');
+    const categories = {
             {% for parent in parentcategory_list %}
-                '{{ parent.pk }}': [
-                    {% for category in parent.category_set.all %}
-                        {
-                            'pk': '{{ category.pk }}',
-                            'name': '{{ category.name }}'
-                        },
-                    {% endfor %}
+    '{{ parent.pk }}': [
+        {% for category in parent.category_set.all %}
+    {
+        'pk': '{{ category.pk }}',
+            'name': '{{ category.name }}'
+    },
+    {% endfor %}
                 ],
-            {% endfor %}
+    {% endfor %}
         };
-        const categories2 = {
+    const categories2 = {
             {% for grand in grandcategory_list %}
-                '{{ grand.pk }}': [
-                    {% for category in grand.parentcategory_set.all %}
-                        {
-                            'pk': '{{ category.pk }}',
-                            'name': '{{ category.name }}'
-                        },
-                    {% endfor %}
+    '{{ grand.pk }}': [
+        {% for category in grand.parentcategory_set.all %}
+    {
+        'pk': '{{ category.pk }}',
+            'name': '{{ category.name }}'
+    },
+    {% endfor %}
                 ],
-            {% endfor %}
+    {% endfor %}
         };
-​
-        const changeCategory = (select) => {
-            categoryElement.children().remove();
-            const parentId = parentCategoryElement.val();
-            const categoryList = categories[parentId];
-            for (const category of categoryList) {
-                const option = $('<option>');
-                option.val(category['pk']);
-                option.text(category['name']);
-                categoryElement.append(option);
-            }
-            if (select !== undefined) {
-                categoryElement.val(select);
-            }
-        };
-​
-        const changeCategory2 = (select) => {
-            parentCategoryElement.children().remove();
-            const grandId = grandCategoryElement.val();
-            const categoryList2 = categories2[grandId];
-            for (const category2 of categoryList2) {
-                const option2 = $('<option>');
-                option2.val(category2['pk']);
-                option2.text(category2['name']);
-                parentCategoryElement.append(option2);
-            }
-            if (select !== undefined) {
-                parentCategoryElement.val(select);
-            }
-        };
-​
-        $('#id_parent_category').on('change', () => {
-            changeCategory();
-        });
-​
-        $('#id_grand_category').on('change', () => {
-            changeCategory2();
-            changeCategory();
-        });
-​
-        if (parentCategoryElement.val()) {
-            const selectedCategory = categoryElement.val();
-            changeCategory(selectedCategory);
+
+    const changeCategory = (select) => {
+        categoryElement.children().remove();
+        const parentId = parentCategoryElement.val();
+        const categoryList = categories[parentId];
+        for (const category of categoryList) {
+            const option = $('<option>');
+            option.val(category['pk']);
+            option.text(category['name']);
+            categoryElement.append(option);
         }
-​
-        if (grandCategoryElement.val()) {
-            const selectedParentCategory = parentCategoryElement.val();
-            changeCategory2(selectedParentCategory);
+        if (select !== undefined) {
+            categoryElement.val(select);
         }
-    </script>
+    };
+
+    const changeCategory2 = (select) => {
+        parentCategoryElement.children().remove();
+        const grandId = grandCategoryElement.val();
+        const categoryList2 = categories2[grandId];
+        for (const category2 of categoryList2) {
+            const option2 = $('<option>');
+            option2.val(category2['pk']);
+            option2.text(category2['name']);
+            parentCategoryElement.append(option2);
+        }
+        if (select !== undefined) {
+            parentCategoryElement.val(select);
+        }
+    };
+
+    $('#id_parent_category').on('change', () => {
+        changeCategory();
+    });
+
+    $('#id_grand_category').on('change', () => {
+        changeCategory2();
+        changeCategory();
+    });
+
+    if (parentCategoryElement.val()) {
+        const selectedCategory = categoryElement.val();
+        changeCategory(selectedCategory);
+    }
+
+    if (grandCategoryElement.val()) {
+        const selectedParentCategory = parentCategoryElement.val();
+        changeCategory2(selectedParentCategory);
+    }
+</script>
 {% endblock %}
