@@ -9,26 +9,25 @@
 
 {% block extrajs %}
     <script>
-        const grandCategoryElement = $('#id_grand_category'); // #id_grand_categoryを展開して代入
-        const parentCategoryElement = $('#id_parent_category'); // #id_parent_categoryを展開して代入
-        const categoryElement = $('#id_category');  // #id_categoryを展開して代入
-        const categories = { // 以下に全てのカテゴリーを定義
+        const grandCategoryElement = $('#id_grand_category');
+        const parentCategoryElement = $('#id_parent_category');
+        const categoryElement = $('#id_category');
+        const categories = {
             {% for grand in grandcategory_list %}
                 '{{ grand.pk }}': [
-                    {% for parent in parentcategory_list %} // 親カテゴリーを1つずつ取り出す
-                        '{{ parent.pk }}': [ // 例：カメラ.1
-                            {% for category in parent.category_set.all %} // 子カテゴリーを1つずつ取り出す
+                    {% for parent in parentcategory_set.all %}
+                        '{{ parent.pk }}': [
+                            {% for category in parent.category_set.all %}
                                 {
-                                    'pk': '{{ category.pk }}', // 1・2・3
-                                    'name': '{{ category.name }}' // Canon・Sony・Olympus
+                                    'pk': '{{ category.pk }}',
+                                    'name': '{{ category.name }}'
                                 },
                             {% endfor %}
                         ],
                     {% endfor %}
-                ]
+                ],
             {% endfor %}
         };
-
 
         const changeCategory1 = (select) => { // changeCategory関数の定義
             // 中カテゴリの選択欄を空にする。
