@@ -12,6 +12,5 @@ class PostCreate(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['grandcategory_list'] = GrandCategory.objects.all()
-        
         context['parentcategory_list'] = ParentCategory.objects.all()
         return context

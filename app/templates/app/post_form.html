@@ -9,9 +9,9 @@
 ​
 {% block extrajs %}
 <script>
-    const grandCategoryElement = $('#id_grand_category');
-    const parentCategoryElement = $('#id_parent_category');
-    const categoryElement = $('#id_category');
+    const grandCategoryElement = document.querySelector('#id_grand_category');
+    const parentCategoryElement = document.querySelector('#id_parent_category');
+    const categoryElement = document.querySelector('#id_category');
     const categories = {
             {% for parent in parentcategory_list %}
     '{{ parent.pk }}': [
@@ -38,51 +38,51 @@
         };
 
     const changeCategory = (select) => {
-        categoryElement.children().remove();
-        const parentId = parentCategoryElement.val();
+        categoryElement.parentNode.removeChild(categoryElement);
+        const parentId = parentCategoryElement.value;
         const categoryList = categories[parentId];
         for (const category of categoryList) {
-            const option = $('<option>');
-            option.val(category['pk']);
-            option.text(category['name']);
-            categoryElement.append(option);
+            const option = document.querySelector('option');
+            option.value = category['pk'];
+            option.textContent = category['name'];
+            categoryElement.appendChild(option);
         }
         if (select !== undefined) {
-            categoryElement.val(select);
+            categoryElement.value = select;
         }
     };
 
     const changeCategory2 = (select) => {
-        parentCategoryElement.children().remove();
-        const grandId = grandCategoryElement.val();
+        parentCategoryElement.parentNode.removeChild(parentCategoryElement);
+        const grandId = grandCategoryElement.value;
         const categoryList2 = categories2[grandId];
         for (const category2 of categoryList2) {
-            const option2 = $('<option>');
-            option2.val(category2['pk']);
-            option2.text(category2['name']);
-            parentCategoryElement.append(option2);
+            const option2 = document.querySelector('option');
+            option2.value = category2['pk'];
+            option2.textContent = category2['name'];
+            parentCategoryElement.appendChild(option2);
         }
         if (select !== undefined) {
-            parentCategoryElement.val(select);
+            parentCategoryElement.value = select;
         }
     };
 
-    $('#id_parent_category').on('change', () => {
+    document.querySelector('#id_parent_category').addEventListener('change', () => {
         changeCategory();
     });
 
-    $('#id_grand_category').on('change', () => {
+    document.querySelector('#id_grand_category').addEventListener('change', () => {
         changeCategory2();
         changeCategory();
     });
 
-    if (parentCategoryElement.val()) {
-        const selectedCategory = categoryElement.val();
+    if (parentCategoryElement.value) {
+        const selectedCategory = categoryElement.value;
         changeCategory(selectedCategory);
     }
 
-    if (grandCategoryElement.val()) {
-        const selectedParentCategory = parentCategoryElement.val();
+    if (grandCategoryElement.value) {
+        const selectedParentCategory = parentCategoryElement.value;
         changeCategory2(selectedParentCategory);
     }
 </script>
