@@ -5,6 +5,8 @@
     {% csrf_token %}
     <button type="submit">送信</button>
 </form>
+
+<a href="/">Top</a>
 {% endblock %}
 ​
 {% block extrajs %}
@@ -36,13 +38,15 @@
                 ],
     {% endfor %}
         };
-
     const changeCategory = (select) => {
-        categoryElement.parentNode.removeChild(categoryElement);
+        const optionAll = document.querySelectorAll('#id_category option');
+        for (const option of optionAll) {
+            categoryElement.removeChild(option);
+        }
         const parentId = parentCategoryElement.value;
         const categoryList = categories[parentId];
         for (const category of categoryList) {
-            const option = document.querySelector('option');
+            const option = document.createElement("option")
             option.value = category['pk'];
             option.textContent = category['name'];
             categoryElement.appendChild(option);
@@ -51,13 +55,15 @@
             categoryElement.value = select;
         }
     };
-
     const changeCategory2 = (select) => {
-        parentCategoryElement.parentNode.removeChild(parentCategoryElement);
+        const optionAll = document.querySelectorAll('#id_parent_category option');
+        for (const option of optionAll) {
+            parentCategoryElement.removeChild(option);
+        }
         const grandId = grandCategoryElement.value;
         const categoryList2 = categories2[grandId];
         for (const category2 of categoryList2) {
-            const option2 = document.querySelector('option');
+            const option2 = document.createElement("option")
             option2.value = category2['pk'];
             option2.textContent = category2['name'];
             parentCategoryElement.appendChild(option2);
@@ -66,24 +72,18 @@
             parentCategoryElement.value = select;
         }
     };
-
-    document.querySelector('#id_parent_category').addEventListener('change', () => {
+    parentCategoryElement.addEventListener('change', () => {
         changeCategory();
     });
-
-    document.querySelector('#id_grand_category').addEventListener('change', () => {
+    grandCategoryElement.addEventListener('change', () => {
         changeCategory2();
         changeCategory();
     });
-
     if (parentCategoryElement.value) {
-        const selectedCategory = categoryElement.value;
-        changeCategory(selectedCategory);
+        changeCategory(categoryElement.value);
     }
-
     if (grandCategoryElement.value) {
-        const selectedParentCategory = parentCategoryElement.value;
-        changeCategory2(selectedParentCategory);
+        changeCategory2(parentCategoryElement.value);
     }
 </script>
 {% endblock %}

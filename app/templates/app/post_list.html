@@ -1,0 +1,43 @@
+{% extends 'app/base.html' %}
+{% block content %}
+
+<h1>投稿リスト</h1>
+
+<div>
+    {% for post in post_list %}
+    <h5>{{ post.title }}</h5>
+    <hr>
+    {% endfor %}
+</div>
+
+<!-- カテゴリー表示欄 -->
+<div class="col-3">
+    <h5>カテゴリー</h5>
+    <div>
+        <ul>
+            {% for grandcategory in grand_list %}
+            <li>{{ grandcategory.name }}</li>
+            {% endfor %}
+        </ul>
+        <hr>
+        <ul>
+            {% for parentcategory in parent_list %}
+            <li>{{ parentcategory.name }}</li>
+            {% endfor %}
+        </ul>
+        <hr>
+        <ul>
+            {% for category in category_list %}
+            <a href="{% url 'app:ca-list' category %}">
+                <li>{{ category.name }}</li>
+            </a>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+
+
+
+{% endblock %}
+​

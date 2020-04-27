@@ -1,0 +1,13 @@
+{% extends 'app/base.html' %}
+{% block content %}
+
+
+<a href="{% url 'app:post_new' %}">
+    <h5>投稿する</h5>
+</a>
+
+<a href="{% url 'app:post_list' %}">
+    <p>投稿リスト</p>
+</a>
+
+{% endblock content %}
