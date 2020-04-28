@@ -28,11 +28,34 @@
         <hr>
         <ul>
             {% for category in category_list %}
-            <a href="{% url 'app:ca-list' category %}">
+            <a href="#">
                 <li>{{ category.name }}</li>
             </a>
             {% endfor %}
         </ul>
+        <hr>
+        <ul>
+            {% for grandcategory in grand_list %}
+            <li>{{ grandcategory.name }}</li>
+                <ul>
+                    {% for parentcategory in parent_list %}
+                        {% if parentcategory.grand.id == grandcategory.id %}
+                            <li>{{ parentcategory.name }}</li>
+                                <ul>
+                                    {% for category in category_list %}
+                                        {% if category.parent.id == parentcategory.id %}
+                                            <a href="{% url 'app:ca-list' category.id %}">
+                                                <li><soan class="{{ grandcategory.icon }}" ></soan>{{ category.name }}</li>
+                                            </a>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        </ul>
+
     </div>
 </div>
 

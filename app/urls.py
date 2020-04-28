@@ -7,5 +7,5 @@ urlpatterns = [
     path('post/new/', views.PostCreateView.as_view(), name='post_new'),
     path('', views.IndexView.as_view(), name='index'),
     path('post/list/', views.PostListView.as_view(), name='post_list'),
-    path('category/<str:category>', views.CaListView.as_view(), name='ca-list'),
+    path('category/<int:category>', views.CaListView.as_view(), name='ca-list'),
 ]

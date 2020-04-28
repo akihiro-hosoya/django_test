@@ -1,0 +1,93 @@
+html, body {
+    height: 100%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    display: block;
+}
+
+
+
+/* ---------- Search欄 ---------- */
+/* .fa-caret-right {
+    float: right;
+    margin-top: 0.3rem;
+}
+
+.dm_1st_sub {
+    color: #fff;
+}
+.dm_1st_sub:hover {
+    color: #00008b;
+} */
+
+.dm_2nd {
+    position: relative;
+    top: ;
+    height: 200px;
+    width: 190px;
+    background: #EEE;
+    /* visibility: hidden; */
+    }		   
+/* .dm_2nd_sub {
+    position: relative;
+    } */
+
+.dm_2nd_sub:hover .dm_3rd {
+    visibility: visible;
+    }
+
+/* .dm_1st:hover .dm_2nd {
+    visibility: visible; 
+    } */
+
+.dm_3rd {
+    position: absolute;
+    top: 0;
+    left: 190px;
+    height: 200px;
+    width: 100%;
+    background: #EEE;
+    visibility: hidden;
+    }
+
+/* .dm_3rd_sub {
+    position: relative;
+    } */
+
+.dm_4th {
+    position: absolute;
+    top: 0;
+    left: 190px;
+    height: 200px;
+    width: 100%;
+    background: #EEE;
+    visibility: hidden;
+    }
+.dm_3rd_sub:hover .dm_4th {
+    visibility: visible;
+    }
+
+.k-search {
+    width: 100%;
+}
+
+.dropdown-item a {
+    display: block;
+}
+.dropdown-item:hover {
+    background-color: #f08080;
+}
+
+

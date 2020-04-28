@@ -2,6 +2,7 @@ from django.db import models
 
 class GrandCategory(models.Model):
     name = models.CharField('大カテゴリー', max_length=50)
+    icon = models.CharField('アイコン', max_length=50)
 
     def __str__(self):
         return self.name

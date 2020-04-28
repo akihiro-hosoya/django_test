@@ -27,12 +27,12 @@
     {% endfor %}
         };
     const categories2 = {
-            {% for grand in grandcategory_list %}
-    '{{ grand.pk }}': [
+        {% for grand in grandcategory_list %}
+            '{{ grand.pk }}': [
         {% for category in grand.parentcategory_set.all %}
     {
         'pk': '{{ category.pk }}',
-            'name': '{{ category.name }}'
+        'name': '{{ category.name }}'
     },
     {% endfor %}
                 ],

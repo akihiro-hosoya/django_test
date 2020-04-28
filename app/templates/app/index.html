@@ -1,6 +1,6 @@
 {% extends 'app/base.html' %}
+{% load static %}
 {% block content %}
-
 
 <a href="{% url 'app:post_new' %}">
     <h5>投稿する</h5>
@@ -9,5 +9,124 @@
 <a href="{% url 'app:post_list' %}">
     <p>投稿リスト</p>
 </a>
+
+<!-- ---------- Search欄 ---------- -->
+<div class="search-bar">
+    <div class="container">
+        <div class="row">
+            <div class="">
+                <ul class="flex-column dm_2nd">
+                    <li class="dm_2nd_sub">
+                        <button class="dropdown-item">
+                            <span>カメラ</span><i class="fas fa-caret-right"></i>
+                        </button>
+                        <ul class="flex-column dm_3rd">
+                            <li class="dm_3rd_sub">
+                                <button class="dropdown-item">
+                                    <span>一眼・ミラーレス</span><i class="fas fa-caret-right"></i>
+                                </button>
+                                <ul class="flex-column dm_4th">
+                                    <li class="dropdown-item">
+                                        <a href="#">Canon</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="#">Sony</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="#">Olympus</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="#">その他</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="dm_3rd_sub">
+                                <button class="dropdown-item">
+                                    <span>コンデジ</span><i class="fas fa-caret-right"></i>
+                                </button>
+                                <ul class="flex-column dm_4th">
+                                    <li class="dropdown-item">
+                                        <a href="#">Canon</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="#">Sony</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="#">その他</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="dm_3rd_sub">
+                                <button class="dropdown-item">
+                                    <span>周辺</span><i class="fas fa-caret-right"></i>
+                                </button>
+                                <ul class="flex-column dm_4th">
+                                    <li class="dropdown-item">
+                                        <a href="#">SD</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="#">アクセサリー</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="#">その他</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dm_2nd_sub">
+                        <button class="dropdown-item">
+                            <span>プリンター</span><i class="fas fa-caret-right"></i>
+                        </button>
+                        <ul class="flex-column dm_3rd">
+                            <li class="dm_3rd_sub">
+                                <button class="dropdown-item">
+                                    <span>本体</span><i class="fas fa-caret-right"></i>
+                                </button>
+                                <ul class="flex-column dm_4th">
+                                    <li class="dropdown-item">
+                                        <a href="#">Canon</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="#">EPSON</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="#">brother</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="#">その他</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="dm_3rd_sub">
+                                <button class="dropdown-item">
+                                    <span>インク</span><i class="fas fa-caret-right"></i>
+                                </button>
+                                <ul class="flex-column dm_4th">
+                                    <li class="dropdown-item">
+                                        <a href="#">Canon</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="#">EPSON</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="#">brother</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="#">その他</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br><br><br>
+
+
 
 {% endblock content %}

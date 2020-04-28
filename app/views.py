@@ -31,7 +31,7 @@ class CaListView(ListView):
     template_name = "app/post_list.html"
 
     def get_queryset(self):
-        category = Category.objects.get(name=self.kwargs['category'])
+        category = Category.objects.get(id=self.kwargs['category'])
         queryset = Post.objects.order_by('-id').filter(category=category)
         return queryset
 
