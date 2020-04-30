@@ -2,7 +2,11 @@ from django.views import generic
 from .forms import PostCreateForm
 from .models import Post, GrandCategory, ParentCategory, Category
 from django.views.generic import CreateView, TemplateView, ListView
-
+from django.shortcuts import render, get_object_or_404
+from django.contrib import messages
+from django.db.models import Q
+from functools import reduce
+from operator import and_
 
 class PostCreateView(CreateView):
     model = Post
@@ -16,8 +20,19 @@ class PostCreateView(CreateView):
         context['parentcategory_list'] = ParentCategory.objects.all()
         return context
 
-class IndexView(TemplateView):
-    template_name = "app/index.html"
+class IndexView(ListView):
+    model = Post
+    template_name = 'app/index.html'
+
+    def get_queryset(self):
+        queryset = Post.objects.order_by('-id')
+        keyword = self.request.GET.get('keyword')
+        if keyword:
+            queryset = queryset.filter(
+                        Q(title__icontains=keyword)
+                    )
+            messages.success(self.request, '「{}」の検索結果'.format(keyword))
+        return queryset
 
 class PostListView(ListView):
     model = Post
@@ -39,3 +54,4 @@ class CaListView(ListView):
         context = super().get_context_data(**kwargs)
         context['category_key'] = self.kwargs['category']
         return context
+
