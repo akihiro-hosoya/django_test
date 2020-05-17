@@ -19,20 +19,30 @@ class PostCreateView(CreateView):
         context['grandcategory_list'] = GrandCategory.objects.all()
         context['parentcategory_list'] = ParentCategory.objects.all()
         return context
-
-class IndexView(ListView):
+class ResultView(ListView):
     model = Post
-    template_name = 'app/index.html'
-
+    template_name = 'app/result.html'
     def get_queryset(self):
         queryset = Post.objects.order_by('-id')
         keyword = self.request.GET.get('keyword')
         if keyword:
-            queryset = queryset.filter(
-                        Q(title__icontains=keyword)
+            exclusion = set([' ', '　'])
+            q_list = ''
+            for i in keyword:
+                if i in exclusion:
+                    pass
+                else:
+                    q_list += i
+            query = reduce(
+                        and_, [Q(title__icontains=q) for q in q_list]
                     )
+            queryset = queryset.filter(query)
             messages.success(self.request, '「{}」の検索結果'.format(keyword))
         return queryset
+
+class IndexView(ListView):
+    model = Post
+    template_name = 'app/index.html'
 
 class PostListView(ListView):
     model = Post
@@ -54,4 +64,3 @@ class CaListView(ListView):
         context = super().get_context_data(**kwargs)
         context['category_key'] = self.kwargs['category']
         return context
-

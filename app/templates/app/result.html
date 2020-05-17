@@ -1,0 +1,15 @@
+{% extends 'app/base.html' %}
+{% block content %}
+
+<h1>投稿リスト</h1>
+
+{% for post in post_list %}
+<ul>
+    <li>
+        {{ post.title }}
+        <a href="#">詳細</a>
+    </li>
+</ul>
+{% endfor %}
+
+{% endblock %}

@@ -8,4 +8,5 @@ urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
     path('post/list/', views.PostListView.as_view(), name='post_list'),
     path('category/<int:category>', views.CaListView.as_view(), name='ca-list'),
+    path('result/', views.ResultView.as_view(), name='result'),
 ]
