@@ -1,18 +1,22 @@
 from django.views import generic
 from .forms import PostCreateForm
 from .models import Post, GrandCategory, ParentCategory, Category
-from django.views.generic import CreateView, TemplateView, ListView
+from django.views.generic import CreateView, TemplateView, ListView, DetailView
 from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
 from django.db.models import Q
 from functools import reduce
 from operator import and_
 
+class PostDetailView(DetailView):
+    model = Post
+    template_name = "app/detail.html"
+
 class PostCreateView(CreateView):
     model = Post
     form_class = PostCreateForm
     template_name = "app/post_form.html"
-    redirect_field_name = "app/index.html"
+    redirect_field_name = "app/post_detail.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
